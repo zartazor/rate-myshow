@@ -1,0 +1,13 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Email Settings - RateMyShow{% endblock %}
+
+{% block auth_content %}
+<h1>Email Settings</h1>
+<p class="muted">Manage your email addresses.</p>
+<form method="post" class="form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn" type="submit">Update</button>
+</form>
+{% endblock %}

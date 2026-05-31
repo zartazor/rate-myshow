@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ list_name }} - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>{{ list_name }}</h1>
+<div class="grid">
+    {% for title in titles %}
+        {% include 'partials/title_card.html' with title=title %}
+    {% empty %}
+        <p>No titles available yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

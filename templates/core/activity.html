@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Activity - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>Recent Activity</h1>
+<ul class="feed">
+    {% for rating in recent_ratings %}
+        <li>
+            <strong>{{ rating.user.email }}</strong> rated
+            <a href="{% url 'title_detail' rating.title.omdb_id %}">{{ rating.title.title }}</a>
+            {{ rating.score }}/10
+        </li>
+    {% empty %}
+        <li>No activity yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}

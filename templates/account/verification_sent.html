@@ -1,0 +1,9 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Verify Your Email - RateMyShow{% endblock %}
+
+{% block auth_content %}
+<h1>Verify your email</h1>
+<p class="muted">We sent a verification link to your email. Open it to activate your account.</p>
+<a class="btn" href="{% url 'account_login' %}">Back to login</a>
+{% endblock %}

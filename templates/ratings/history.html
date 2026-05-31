@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Watched History - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>Watched History</h1>
+<div class="grid">
+    {% for item in items %}
+        {% include 'partials/title_card.html' with title=item.title %}
+    {% empty %}
+        <p>No watched titles yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

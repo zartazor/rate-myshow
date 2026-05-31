@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Recommendations - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>Recommended For You</h1>
+<div class="grid">
+    {% for title in titles %}
+        {% include 'partials/title_card.html' with title=title %}
+    {% empty %}
+        <p>Rate more titles to get recommendations.</p>
+    {% endfor %}
+</div>
+{% endblock %}

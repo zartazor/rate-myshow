@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Watchlist - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>Your Watchlist</h1>
+<div class="grid">
+    {% for item in items %}
+        {% include 'partials/title_card.html' with title=item.title %}
+    {% empty %}
+        <p>Your watchlist is empty.</p>
+    {% endfor %}
+</div>
+{% endblock %}

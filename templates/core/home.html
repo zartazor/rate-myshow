@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}RateMyShow - Home{% endblock %}
+
+{% block content %}
+<section class="hero">
+    {% if trending %}
+        <div class="hero-content">
+            <p class="tag">Trending This Week</p>
+            <h1>{{ trending.0.title }}</h1>
+            <p>{{ trending.0.data.Plot }}</p>
+            <a class="btn" href="{% url 'title_detail' trending.0.omdb_id %}">View Details</a>
+        </div>
+        <img class="hero-poster" src="{{ trending.0.poster }}" alt="{{ trending.0.title }}" />
+    {% endif %}
+</section>
+
+<section>
+    <h2>Trending This Week</h2>
+    <div class="grid">
+        {% for title in trending %}
+            {% include 'partials/title_card.html' with title=title %}
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <h2>Popular Movies</h2>
+    <div class="grid">
+        {% for title in popular_movies %}
+            {% include 'partials/title_card.html' with title=title %}
+        {% endfor %}
+    </div>
+</section>
+
+<section>
+    <h2>Top TV Shows</h2>
+    <div class="grid">
+        {% for title in top_tv %}
+            {% include 'partials/title_card.html' with title=title %}
+        {% endfor %}
+    </div>
+</section>
+
+{% if user.is_authenticated %}
+<section>
+    <h2>Recommended For You</h2>
+    <div class="grid">
+        {% for title in recommended %}
+            {% include 'partials/title_card.html' with title=title %}
+        {% empty %}
+            <p>Rate a few titles to unlock recommendations.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

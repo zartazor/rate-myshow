@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Genres - RateMyShow{% endblock %}
+
+{% block content %}
+<h1>Genres</h1>
+<div class="genre-layout">
+    <aside class="genre-list">
+        {% for genre in genres %}
+            <a href="{% url 'genre_detail' genre.id %}">{{ genre.name }}</a>
+        {% empty %}
+            <p>No genres yet.</p>
+        {% endfor %}
+    </aside>
+    <section class="genre-results">
+        {% if selected %}
+            <h2>{{ selected.name }}</h2>
+            <div class="grid">
+                {% for title in titles %}
+                    {% include 'partials/title_card.html' with title=title %}
+                {% empty %}
+                    <p>No titles in this genre yet.</p>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>Select a genre to browse titles.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

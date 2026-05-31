@@ -1,0 +1,16 @@
+{% extends 'account/base.html' %}
+
+{% block title %}Confirm Email - RateMyShow{% endblock %}
+
+{% block auth_content %}
+<h1>Confirm your email</h1>
+{% if confirmation %}
+    <p class="muted">Please confirm that {{ confirmation.email_address.email }} belongs to you.</p>
+    <form method="post" class="form">
+        {% csrf_token %}
+        <button class="btn" type="submit">Confirm</button>
+    </form>
+{% else %}
+    <p class="muted">This confirmation link is invalid or has expired.</p>
+{% endif %}
+{% endblock %}

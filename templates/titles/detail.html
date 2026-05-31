@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title.title }} - RateMyShow{% endblock %}
+
+{% block content %}
+<section class="detail">
+    <img class="poster" src="{{ title.poster }}" alt="{{ title.title }}" />
+    <div class="detail-info">
+        <h1>{{ title.title }}</h1>
+        <p>{{ title.year }} · {{ title.type|title }}</p>
+        <p>{{ title.data.Plot }}</p>
+        <p><strong>Genres:</strong> {{ title.data.Genre }}</p>
+        <p><strong>Actors:</strong> {{ title.data.Actors }}</p>
+        <div class="detail-actions">
+            <a class="btn" href="{% url 'rate_title' title.omdb_id %}">Rate this</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'toggle_watchlist' title.omdb_id %}">
+                    {% csrf_token %}
+                    <button class="ghost-btn" type="submit">
+                        {% if in_watchlist %}Remove from Watchlist{% else %}Add to Watchlist{% endif %}
+                    </button>
+                </form>
+            {% endif %}
+        </div>
+        <div class="trailer">
+            <p><strong>Trailer:</strong> Not available from OMDB. Add a trailer provider if desired.</p>
+        </div>
+        <div class="rating-summary">
+            <p>Average rating: {{ avg_rating|floatformat:1 }}/10</p>
+            <div class="distribution">
+                {% for score, count in distribution.items %}
+                    <span>{{ score }}: {{ count }}</span>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2>User Reviews</h2>
+    <ul class="feed">
+        {% for rating in ratings %}
+            <li>
+                <strong>{{ rating.user.email }}</strong> · {{ rating.score }}/10
+                {% if rating.spoiler %}<span class="tag">Spoiler</span>{% endif %}
+                <p>{{ rating.review_text|default:"No review text" }}</p>
+            </li>
+        {% empty %}
+            <li>No reviews yet. Be the first to rate this title.</li>
+        {% endfor %}
+    </ul>
+</section>
+
+{% if user.is_authenticated %}
+<section>
+    <h2>Because you watched</h2>
+    <div class="grid">
+        {% for item in recommended %}
+            {% include 'partials/title_card.html' with title=item %}
+        {% empty %}
+            <p>Rate more titles to unlock recommendations.</p>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+{% endblock %}

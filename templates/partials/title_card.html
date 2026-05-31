@@ -1,0 +1,7 @@
+<a class="card" href="{% url 'title_detail' title.omdb_id %}">
+    <img src="{{ title.poster }}" alt="{{ title.title }}" />
+    <div class="card-body">
+        <h3>{{ title.title }}</h3>
+        <p>{{ title.year }}</p>
+    </div>
+</a>
